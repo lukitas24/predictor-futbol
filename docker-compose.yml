@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/app:/app
+      - ./backend/prolog:/app/prolog
+    restart: always
+    env_file:
+      - .env  # Asegura que tanto API_FOOTBALL_KEY como FOOTBALL_DATA_KEY se carguen
+    environment:
+      - API_FOOTBALL_KEY=${API_FOOTBALL_KEY}
+      - FOOTBALL_DATA_KEY=${FOOTBALL_DATA_KEY}
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    restart: always

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Obtener el path del directorio donde está el script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Comandos para Docker
+case "$1" in
+  build )
+    echo "Construyendo imágenes..."
+    docker compose -f "$SCRIPT_DIR/docker-compose.yml" build
+    ;;
+  up )
+    echo "Iniciando contenedores..."
+    docker compose -f "$SCRIPT_DIR/docker-compose.yml" up -d
+    ;;
+  down )
+    echo "Deteniendo contenedores..."
+    docker compose -f "$SCRIPT_DIR/docker-compose.yml" down
+    ;;
+  restart )
+    echo "Reiniciando servicio $2..."
+    docker compose -f "$SCRIPT_DIR/docker-compose.yml" restart "$2"
+    ;;
+  restart-all )
+    echo "Reiniciando todos los contenedores..."
+    docker compose -f "$SCRIPT_DIR/docker-compose.yml" restart
+    ;;
+  * )
+    echo "Opción inválida. Usá: build | up | down | restart <servicio> | restart-all"
+    ;;
+esac
