@@ -1,40 +1,61 @@
-// services/footballService.js
+// services/torneo.service.js
+const BASE_URL = 'http://localhost:8000'; // Cambiá esta URL si el backend corre en otro servidor.
 
-const BASE_URL = "http://localhost:8000" // o tu URL backend
+async function obtener(path) {
+    let res;
+    try {
+        res = await fetch(`${BASE_URL}${path}`);
+    } catch (err) {
+        throw new Error(`No se pudo conectar con el backend: ${err.message}`);
+    }
 
-// Trae las ligas filtradas (ej: whitelist en backend)
+    let data;
+    try {
+        data = await res.json();
+    } catch {
+        throw new Error(`Respuesta inválida del backend (HTTP ${res.status}).`);
+    }
+
+    if (!res.ok || data?.error) {
+        throw new Error(typeof data?.detail === 'string' ? data.detail : data?.error || `Error HTTP ${res.status}`);
+    }
+
+    return data;
+}
+
 export async function getLeagues() {
-  const res = await fetch(`${BASE_URL}/leagues`)
-  const data = await res.json()
-  return data.leagues // asumimos { leagues: [...] }
+    const data = await obtener('/leagues');
+    return data.leagues;
 }
 
-// Trae tabla de posiciones para una liga y temporada
-export async function getStandings(leagueId, season = "2024") {
-  const res = await fetch(`${BASE_URL}/tabla/leagues/${leagueId}?season=${season}`);
-  const data = await res.json();
-  console.log("Datos standings recibidos:", data);
-  return data;
+export function getStandings(leagueId, season = '2026') {
+    return obtener(`/tabla/leagues/${encodeURIComponent(leagueId)}?season=${encodeURIComponent(season)}`);
 }
 
-export async function getFixtures(leagueId, season = "2024") {
-  const res = await fetch(`${BASE_URL}/fixtures/league/${leagueId}?season=${season}`);
-  const data = await res.json();
-  console.log("Datos fixtures recibidos:", data);
-  return data;
+export function getFixtures(leagueId, season = '2026') {
+    return obtener(`/fixtures/league/${encodeURIComponent(leagueId)}?season=${encodeURIComponent(season)}`);
 }
 
-export async function predecir_simple(league_id, equipo, min_pos = 1, max_pos = 2, fechas = 1) {
-  const res = await fetch(`${BASE_URL}/prolog/escenarios/${league_id}/${equipo}?min_pos=${min_pos}&max_pos=${max_pos}&fechas=${fechas}`);
-  const data = await res.json();
-  console.log("Datos predicción recibidos:", data);
-  return data;
+export function predecir_simple(leagueId, equipo, minPos = 1, maxPos = 2, fechas = 1) {
+    const params = new URLSearchParams({
+        min_pos: String(minPos),
+        max_pos: String(maxPos),
+        fechas: String(fechas)
+    });
+
+    return obtener(`/prolog/escenarios/${encodeURIComponent(leagueId)}/${encodeURIComponent(equipo)}?${params}`);
 }
 
-export async function predecir_goles(league_id, equipo, min_pos = 1, max_pos = 2, fechas = 1) {
-  let partidos= fechas*2;
-  const res = await fetch(`${BASE_URL}/prolog/escenarios_con_detalles/${league_id}/${equipo}?min_pos=${min_pos}&max_pos=${max_pos}&fechas=${partidos}`);
-  const data = await res.json();
-  console.log("Datos predicción goles recibidos:", data);
-  return data;
+export function predecir_goles(leagueId, equipo, minPos = 1, maxPos = 2, fechas = 1) {
+    // 'fechas' significa jornadas pendientes.
+    // Ya no se multiplica por dos.
+    const params = new URLSearchParams({
+        min_pos: String(minPos),
+        max_pos: String(maxPos),
+        fechas: String(fechas)
+    });
+
+    return obtener(
+        `/prolog/escenarios_con_detalles/${encodeURIComponent(leagueId)}/${encodeURIComponent(equipo)}?${params}`
+    );
 }

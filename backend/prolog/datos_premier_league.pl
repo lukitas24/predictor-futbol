@@ -1,354 +1,64 @@
-puntos(liverpool_fc, 0).
-goles(liverpool_fc, 0, 0).
-puntos(afc_bournemouth, 0).
-goles(afc_bournemouth, 0, 0).
-puntos(aston_villa_fc, 0).
-goles(aston_villa_fc, 0, 0).
-puntos(newcastle_united_fc, 0).
-goles(newcastle_united_fc, 0, 0).
-puntos(brighton_hove_albion_fc, 0).
-goles(brighton_hove_albion_fc, 0, 0).
-puntos(fulham_fc, 0).
-goles(fulham_fc, 0, 0).
-puntos(sunderland_afc, 0).
-goles(sunderland_afc, 0, 0).
-puntos(west_ham_united_fc, 0).
-goles(west_ham_united_fc, 0, 0).
-puntos(tottenham_hotspur_fc, 0).
-goles(tottenham_hotspur_fc, 0, 0).
-puntos(burnley_fc, 0).
-goles(burnley_fc, 0, 0).
-puntos(wolverhampton_wanderers_fc, 0).
-goles(wolverhampton_wanderers_fc, 0, 0).
-puntos(manchester_city_fc, 0).
-goles(manchester_city_fc, 0, 0).
-puntos(nottingham_forest_fc, 0).
-goles(nottingham_forest_fc, 0, 0).
-puntos(brentford_fc, 0).
-goles(brentford_fc, 0, 0).
-puntos(chelsea_fc, 0).
-goles(chelsea_fc, 0, 0).
-puntos(crystal_palace_fc, 0).
-goles(crystal_palace_fc, 0, 0).
-puntos(manchester_united_fc, 0).
-goles(manchester_united_fc, 0, 0).
-puntos(arsenal_fc, 0).
-goles(arsenal_fc, 0, 0).
-puntos(leeds_united_fc, 0).
-goles(leeds_united_fc, 0, 0).
-puntos(everton_fc, 0).
-goles(everton_fc, 0, 0).
+puntos(arsenal_fc, 64).
+goles(arsenal_fc, 58, 22).
+puntos(manchester_city_fc, 59).
+goles(manchester_city_fc, 57, 25).
+puntos(manchester_united_fc, 51).
+goles(manchester_united_fc, 50, 38).
+puntos(aston_villa_fc, 51).
+goles(aston_villa_fc, 38, 30).
+puntos(liverpool_fc, 48).
+goles(liverpool_fc, 48, 39).
+puntos(chelsea_fc, 45).
+goles(chelsea_fc, 49, 33).
+puntos(brentford_fc, 44).
+goles(brentford_fc, 44, 40).
+puntos(everton_fc, 43).
+goles(everton_fc, 34, 33).
+puntos(afc_bournemouth, 40).
+goles(afc_bournemouth, 44, 46).
+puntos(fulham_fc, 40).
+goles(fulham_fc, 40, 42).
+puntos(sunderland_afc, 40).
+goles(sunderland_afc, 30, 34).
+puntos(brighton_hove_albion_fc, 37).
+goles(brighton_hove_albion_fc, 38, 35).
+puntos(newcastle_united_fc, 36).
+goles(newcastle_united_fc, 40, 42).
+puntos(crystal_palace_fc, 35).
+goles(crystal_palace_fc, 30, 34).
+puntos(leeds_united_fc, 31).
+goles(leeds_united_fc, 37, 48).
+puntos(tottenham_hotspur_fc, 29).
+goles(tottenham_hotspur_fc, 38, 43).
+puntos(nottingham_forest_fc, 27).
+goles(nottingham_forest_fc, 26, 41).
+puntos(west_ham_united_fc, 25).
+goles(west_ham_united_fc, 34, 54).
+puntos(burnley_fc, 19).
+goles(burnley_fc, 32, 58).
+puntos(wolverhampton_wanderers_fc, 16).
+goles(wolverhampton_wanderers_fc, 22, 52).
 
-partido(537785, liverpool_fc, afc_bournemouth).
-partido(537786, aston_villa_fc, newcastle_united_fc).
-partido(537787, brighton_hove_albion_fc, fulham_fc).
-partido(537789, sunderland_afc, west_ham_united_fc).
-partido(537790, tottenham_hotspur_fc, burnley_fc).
-partido(537791, wolverhampton_wanderers_fc, manchester_city_fc).
-partido(537788, nottingham_forest_fc, brentford_fc).
-partido(537792, chelsea_fc, crystal_palace_fc).
-partido(537793, manchester_united_fc, arsenal_fc).
-partido(537794, leeds_united_fc, everton_fc).
-partido(537804, west_ham_united_fc, chelsea_fc).
-partido(537802, manchester_city_fc, tottenham_hotspur_fc).
-partido(537795, afc_bournemouth, wolverhampton_wanderers_fc).
-partido(537798, brentford_fc, aston_villa_fc).
-partido(537799, burnley_fc, sunderland_afc).
-partido(537797, arsenal_fc, leeds_united_fc).
-partido(537796, crystal_palace_fc, nottingham_forest_fc).
-partido(537800, everton_fc, brighton_hove_albion_fc).
-partido(537801, fulham_fc, manchester_united_fc).
-partido(537803, newcastle_united_fc, liverpool_fc).
-partido(537806, aston_villa_fc, crystal_palace_fc).
-partido(537805, sunderland_afc, brentford_fc).
-partido(537808, chelsea_fc, fulham_fc).
-partido(537811, manchester_united_fc, burnley_fc).
-partido(537813, tottenham_hotspur_fc, afc_bournemouth).
-partido(537814, wolverhampton_wanderers_fc, everton_fc).
-partido(537810, leeds_united_fc, newcastle_united_fc).
-partido(537807, brighton_hove_albion_fc, manchester_city_fc).
-partido(537812, nottingham_forest_fc, west_ham_united_fc).
-partido(537809, liverpool_fc, arsenal_fc).
-partido(537817, arsenal_fc, nottingham_forest_fc).
-partido(537815, afc_bournemouth, brighton_hove_albion_fc).
-partido(537816, crystal_palace_fc, sunderland_afc).
-partido(537818, brentford_fc, chelsea_fc).
-partido(537820, everton_fc, aston_villa_fc).
-partido(537821, fulham_fc, leeds_united_fc).
-partido(537823, newcastle_united_fc, wolverhampton_wanderers_fc).
-partido(537824, west_ham_united_fc, tottenham_hotspur_fc).
-partido(537819, burnley_fc, liverpool_fc).
-partido(537822, manchester_city_fc, manchester_united_fc).
-partido(537831, liverpool_fc, everton_fc).
-partido(537825, afc_bournemouth, newcastle_united_fc).
-partido(537827, brighton_hove_albion_fc, tottenham_hotspur_fc).
-partido(537829, burnley_fc, nottingham_forest_fc).
-partido(537833, west_ham_united_fc, crystal_palace_fc).
-partido(537834, wolverhampton_wanderers_fc, leeds_united_fc).
-partido(537832, manchester_united_fc, chelsea_fc).
-partido(537830, fulham_fc, brentford_fc).
-partido(537826, sunderland_afc, aston_villa_fc).
-partido(537828, arsenal_fc, manchester_city_fc).
-partido(537837, brentford_fc, manchester_united_fc).
-partido(537835, aston_villa_fc, fulham_fc).
-partido(537836, crystal_palace_fc, liverpool_fc).
-partido(537838, chelsea_fc, brighton_hove_albion_fc).
-partido(537840, leeds_united_fc, afc_bournemouth).
-partido(537841, manchester_city_fc, burnley_fc).
-partido(537843, nottingham_forest_fc, sunderland_afc).
-partido(537844, tottenham_hotspur_fc, wolverhampton_wanderers_fc).
-partido(537842, newcastle_united_fc, arsenal_fc).
-partido(537839, everton_fc, west_ham_united_fc).
-partido(537845, afc_bournemouth, fulham_fc).
-partido(537846, aston_villa_fc, burnley_fc).
-partido(537847, arsenal_fc, west_ham_united_fc).
-partido(537848, brentford_fc, manchester_city_fc).
-partido(537849, chelsea_fc, liverpool_fc).
-partido(537850, everton_fc, crystal_palace_fc).
-partido(537851, leeds_united_fc, tottenham_hotspur_fc).
-partido(537852, manchester_united_fc, sunderland_afc).
-partido(537853, newcastle_united_fc, nottingham_forest_fc).
-partido(537854, wolverhampton_wanderers_fc, brighton_hove_albion_fc).
-partido(537856, brighton_hove_albion_fc, newcastle_united_fc).
-partido(537857, crystal_palace_fc, afc_bournemouth).
-partido(537858, burnley_fc, leeds_united_fc).
-partido(537859, fulham_fc, arsenal_fc).
-partido(537860, liverpool_fc, manchester_united_fc).
-partido(537861, manchester_city_fc, everton_fc).
-partido(537862, nottingham_forest_fc, chelsea_fc).
-partido(537863, tottenham_hotspur_fc, aston_villa_fc).
-partido(537864, west_ham_united_fc, brentford_fc).
-partido(537855, sunderland_afc, wolverhampton_wanderers_fc).
-partido(537865, afc_bournemouth, nottingham_forest_fc).
-partido(537866, aston_villa_fc, manchester_city_fc).
-partido(537867, arsenal_fc, crystal_palace_fc).
-partido(537868, brentford_fc, liverpool_fc).
-partido(537869, chelsea_fc, sunderland_afc).
-partido(537870, everton_fc, tottenham_hotspur_fc).
-partido(537871, leeds_united_fc, west_ham_united_fc).
-partido(537872, manchester_united_fc, brighton_hove_albion_fc).
-partido(537873, newcastle_united_fc, fulham_fc).
-partido(537874, wolverhampton_wanderers_fc, burnley_fc).
-partido(537875, sunderland_afc, everton_fc).
-partido(537876, brighton_hove_albion_fc, leeds_united_fc).
-partido(537877, crystal_palace_fc, brentford_fc).
-partido(537878, burnley_fc, arsenal_fc).
-partido(537879, fulham_fc, wolverhampton_wanderers_fc).
-partido(537880, liverpool_fc, aston_villa_fc).
-partido(537881, manchester_city_fc, afc_bournemouth).
-partido(537882, nottingham_forest_fc, manchester_united_fc).
-partido(537883, tottenham_hotspur_fc, chelsea_fc).
-partido(537884, west_ham_united_fc, newcastle_united_fc).
-partido(537885, sunderland_afc, arsenal_fc).
-partido(537886, aston_villa_fc, afc_bournemouth).
-partido(537887, crystal_palace_fc, brighton_hove_albion_fc).
-partido(537888, brentford_fc, newcastle_united_fc).
-partido(537889, chelsea_fc, wolverhampton_wanderers_fc).
-partido(537890, everton_fc, fulham_fc).
-partido(537891, manchester_city_fc, liverpool_fc).
-partido(537892, nottingham_forest_fc, leeds_united_fc).
-partido(537893, tottenham_hotspur_fc, manchester_united_fc).
-partido(537894, west_ham_united_fc, burnley_fc).
-partido(537895, afc_bournemouth, west_ham_united_fc).
-partido(537896, brighton_hove_albion_fc, brentford_fc).
-partido(537897, arsenal_fc, tottenham_hotspur_fc).
-partido(537898, burnley_fc, chelsea_fc).
-partido(537899, fulham_fc, sunderland_afc).
-partido(537900, liverpool_fc, nottingham_forest_fc).
-partido(537901, leeds_united_fc, aston_villa_fc).
-partido(537902, manchester_united_fc, everton_fc).
-partido(537903, newcastle_united_fc, manchester_city_fc).
-partido(537904, wolverhampton_wanderers_fc, crystal_palace_fc).
-partido(537905, sunderland_afc, afc_bournemouth).
-partido(537906, aston_villa_fc, wolverhampton_wanderers_fc).
-partido(537907, crystal_palace_fc, manchester_united_fc).
-partido(537908, brentford_fc, burnley_fc).
-partido(537909, chelsea_fc, arsenal_fc).
-partido(537910, everton_fc, newcastle_united_fc).
-partido(537911, manchester_city_fc, leeds_united_fc).
-partido(537912, nottingham_forest_fc, brighton_hove_albion_fc).
-partido(537913, tottenham_hotspur_fc, fulham_fc).
-partido(537914, west_ham_united_fc, liverpool_fc).
-partido(537915, afc_bournemouth, everton_fc).
-partido(537916, brighton_hove_albion_fc, aston_villa_fc).
-partido(537917, arsenal_fc, brentford_fc).
-partido(537918, burnley_fc, crystal_palace_fc).
-partido(537919, fulham_fc, manchester_city_fc).
-partido(537920, liverpool_fc, sunderland_afc).
-partido(537921, leeds_united_fc, chelsea_fc).
-partido(537922, manchester_united_fc, west_ham_united_fc).
-partido(537923, newcastle_united_fc, tottenham_hotspur_fc).
-partido(537924, wolverhampton_wanderers_fc, nottingham_forest_fc).
-partido(537925, afc_bournemouth, chelsea_fc).
-partido(537926, aston_villa_fc, arsenal_fc).
-partido(537927, brighton_hove_albion_fc, west_ham_united_fc).
-partido(537928, everton_fc, nottingham_forest_fc).
-partido(537929, fulham_fc, crystal_palace_fc).
-partido(537930, leeds_united_fc, liverpool_fc).
-partido(537931, manchester_city_fc, sunderland_afc).
-partido(537932, newcastle_united_fc, burnley_fc).
-partido(537933, tottenham_hotspur_fc, brentford_fc).
-partido(537934, wolverhampton_wanderers_fc, manchester_united_fc).
-partido(537935, sunderland_afc, newcastle_united_fc).
-partido(537936, crystal_palace_fc, manchester_city_fc).
-partido(537937, arsenal_fc, wolverhampton_wanderers_fc).
-partido(537938, brentford_fc, leeds_united_fc).
-partido(537939, burnley_fc, fulham_fc).
-partido(537940, chelsea_fc, everton_fc).
-partido(537941, liverpool_fc, brighton_hove_albion_fc).
-partido(537942, manchester_united_fc, afc_bournemouth).
-partido(537943, nottingham_forest_fc, tottenham_hotspur_fc).
-partido(537944, west_ham_united_fc, aston_villa_fc).
-partido(537945, afc_bournemouth, burnley_fc).
-partido(537946, aston_villa_fc, manchester_united_fc).
-partido(537947, brighton_hove_albion_fc, sunderland_afc).
-partido(537948, everton_fc, arsenal_fc).
-partido(537949, fulham_fc, nottingham_forest_fc).
-partido(537950, leeds_united_fc, crystal_palace_fc).
-partido(537951, manchester_city_fc, west_ham_united_fc).
-partido(537952, newcastle_united_fc, chelsea_fc).
-partido(537953, tottenham_hotspur_fc, liverpool_fc).
-partido(537954, wolverhampton_wanderers_fc, brentford_fc).
-partido(537955, sunderland_afc, leeds_united_fc).
-partido(537956, crystal_palace_fc, tottenham_hotspur_fc).
-partido(537957, arsenal_fc, brighton_hove_albion_fc).
-partido(537958, brentford_fc, afc_bournemouth).
-partido(537959, burnley_fc, everton_fc).
-partido(537960, chelsea_fc, aston_villa_fc).
-partido(537961, liverpool_fc, wolverhampton_wanderers_fc).
-partido(537962, manchester_united_fc, newcastle_united_fc).
-partido(537963, nottingham_forest_fc, manchester_city_fc).
-partido(537964, west_ham_united_fc, fulham_fc).
-partido(537965, sunderland_afc, manchester_city_fc).
-partido(537966, crystal_palace_fc, fulham_fc).
-partido(537967, arsenal_fc, aston_villa_fc).
-partido(537968, brentford_fc, tottenham_hotspur_fc).
-partido(537969, burnley_fc, newcastle_united_fc).
-partido(537970, chelsea_fc, afc_bournemouth).
-partido(537971, liverpool_fc, leeds_united_fc).
-partido(537972, manchester_united_fc, wolverhampton_wanderers_fc).
-partido(537973, nottingham_forest_fc, everton_fc).
-partido(537974, west_ham_united_fc, brighton_hove_albion_fc).
-partido(537975, afc_bournemouth, arsenal_fc).
-partido(537976, aston_villa_fc, nottingham_forest_fc).
-partido(537977, brighton_hove_albion_fc, burnley_fc).
-partido(537978, everton_fc, brentford_fc).
-partido(537979, fulham_fc, liverpool_fc).
-partido(537980, leeds_united_fc, manchester_united_fc).
-partido(537981, manchester_city_fc, chelsea_fc).
-partido(537982, newcastle_united_fc, crystal_palace_fc).
-partido(537983, tottenham_hotspur_fc, sunderland_afc).
-partido(537984, wolverhampton_wanderers_fc, west_ham_united_fc).
-partido(537985, afc_bournemouth, tottenham_hotspur_fc).
-partido(537986, crystal_palace_fc, aston_villa_fc).
-partido(537987, arsenal_fc, liverpool_fc).
-partido(537988, brentford_fc, sunderland_afc).
-partido(537989, burnley_fc, manchester_united_fc).
-partido(537990, everton_fc, wolverhampton_wanderers_fc).
-partido(537991, fulham_fc, chelsea_fc).
-partido(537992, manchester_city_fc, brighton_hove_albion_fc).
-partido(537993, newcastle_united_fc, leeds_united_fc).
-partido(537994, west_ham_united_fc, nottingham_forest_fc).
-partido(537995, sunderland_afc, crystal_palace_fc).
-partido(537996, aston_villa_fc, everton_fc).
-partido(537997, brighton_hove_albion_fc, afc_bournemouth).
-partido(537998, chelsea_fc, brentford_fc).
-partido(537999, liverpool_fc, burnley_fc).
-partido(538000, leeds_united_fc, fulham_fc).
-partido(538001, manchester_united_fc, manchester_city_fc).
-partido(538002, nottingham_forest_fc, arsenal_fc).
-partido(538003, tottenham_hotspur_fc, west_ham_united_fc).
-partido(538004, wolverhampton_wanderers_fc, newcastle_united_fc).
-partido(538005, afc_bournemouth, liverpool_fc).
-partido(538006, crystal_palace_fc, chelsea_fc).
-partido(538007, arsenal_fc, manchester_united_fc).
-partido(538008, brentford_fc, nottingham_forest_fc).
-partido(538009, burnley_fc, tottenham_hotspur_fc).
-partido(538010, everton_fc, leeds_united_fc).
-partido(538011, fulham_fc, brighton_hove_albion_fc).
-partido(538012, manchester_city_fc, wolverhampton_wanderers_fc).
-partido(538013, newcastle_united_fc, aston_villa_fc).
-partido(538014, west_ham_united_fc, sunderland_afc).
-partido(538015, sunderland_afc, burnley_fc).
-partido(538016, aston_villa_fc, brentford_fc).
-partido(538017, brighton_hove_albion_fc, everton_fc).
-partido(538018, chelsea_fc, west_ham_united_fc).
-partido(538019, liverpool_fc, newcastle_united_fc).
-partido(538020, leeds_united_fc, arsenal_fc).
-partido(538021, manchester_united_fc, fulham_fc).
-partido(538022, nottingham_forest_fc, crystal_palace_fc).
-partido(538023, tottenham_hotspur_fc, manchester_city_fc).
-partido(538024, wolverhampton_wanderers_fc, afc_bournemouth).
-partido(538025, afc_bournemouth, aston_villa_fc).
-partido(538026, brighton_hove_albion_fc, crystal_palace_fc).
-partido(538027, arsenal_fc, sunderland_afc).
-partido(538028, burnley_fc, west_ham_united_fc).
-partido(538029, fulham_fc, everton_fc).
-partido(538030, liverpool_fc, manchester_city_fc).
-partido(538031, leeds_united_fc, nottingham_forest_fc).
-partido(538032, manchester_united_fc, tottenham_hotspur_fc).
-partido(538033, newcastle_united_fc, brentford_fc).
-partido(538034, wolverhampton_wanderers_fc, chelsea_fc).
-partido(538035, sunderland_afc, liverpool_fc).
-partido(538036, aston_villa_fc, brighton_hove_albion_fc).
-partido(538037, crystal_palace_fc, burnley_fc).
-partido(538038, brentford_fc, arsenal_fc).
-partido(538039, chelsea_fc, leeds_united_fc).
-partido(538040, everton_fc, afc_bournemouth).
-partido(538041, manchester_city_fc, fulham_fc).
-partido(538042, nottingham_forest_fc, wolverhampton_wanderers_fc).
-partido(538043, tottenham_hotspur_fc, newcastle_united_fc).
-partido(538044, west_ham_united_fc, manchester_united_fc).
-partido(538045, sunderland_afc, fulham_fc).
-partido(538046, aston_villa_fc, leeds_united_fc).
-partido(538047, crystal_palace_fc, wolverhampton_wanderers_fc).
-partido(538048, brentford_fc, brighton_hove_albion_fc).
-partido(538049, chelsea_fc, burnley_fc).
-partido(538050, everton_fc, manchester_united_fc).
-partido(538051, manchester_city_fc, newcastle_united_fc).
-partido(538052, nottingham_forest_fc, liverpool_fc).
-partido(538053, tottenham_hotspur_fc, arsenal_fc).
-partido(538054, west_ham_united_fc, afc_bournemouth).
-partido(538055, afc_bournemouth, sunderland_afc).
-partido(538056, brighton_hove_albion_fc, nottingham_forest_fc).
-partido(538057, arsenal_fc, chelsea_fc).
-partido(538058, burnley_fc, brentford_fc).
-partido(538059, fulham_fc, tottenham_hotspur_fc).
-partido(538060, liverpool_fc, west_ham_united_fc).
-partido(538061, leeds_united_fc, manchester_city_fc).
-partido(538062, manchester_united_fc, crystal_palace_fc).
-partido(538063, newcastle_united_fc, everton_fc).
-partido(538064, wolverhampton_wanderers_fc, aston_villa_fc).
-partido(538065, afc_bournemouth, brentford_fc).
-partido(538066, aston_villa_fc, chelsea_fc).
-partido(538067, brighton_hove_albion_fc, arsenal_fc).
-partido(538068, everton_fc, burnley_fc).
-partido(538069, fulham_fc, west_ham_united_fc).
-partido(538070, leeds_united_fc, sunderland_afc).
-partido(538071, manchester_city_fc, nottingham_forest_fc).
 partido(538072, newcastle_united_fc, manchester_united_fc).
 partido(538073, tottenham_hotspur_fc, crystal_palace_fc).
-partido(538074, wolverhampton_wanderers_fc, liverpool_fc).
 partido(538075, sunderland_afc, brighton_hove_albion_fc).
-partido(538076, crystal_palace_fc, leeds_united_fc).
-partido(538077, arsenal_fc, everton_fc).
-partido(538078, brentford_fc, wolverhampton_wanderers_fc).
 partido(538079, burnley_fc, afc_bournemouth).
+partido(538077, arsenal_fc, everton_fc).
 partido(538080, chelsea_fc, newcastle_united_fc).
-partido(538081, liverpool_fc, tottenham_hotspur_fc).
+partido(538084, west_ham_united_fc, manchester_city_fc).
+partido(538076, crystal_palace_fc, leeds_united_fc).
 partido(538082, manchester_united_fc, aston_villa_fc).
 partido(538083, nottingham_forest_fc, fulham_fc).
-partido(538084, west_ham_united_fc, manchester_city_fc).
+partido(538081, liverpool_fc, tottenham_hotspur_fc).
+partido(538078, brentford_fc, wolverhampton_wanderers_fc).
 partido(538085, afc_bournemouth, manchester_united_fc).
-partido(538086, aston_villa_fc, west_ham_united_fc).
 partido(538087, brighton_hove_albion_fc, liverpool_fc).
-partido(538088, everton_fc, chelsea_fc).
 partido(538089, fulham_fc, burnley_fc).
+partido(538088, everton_fc, chelsea_fc).
 partido(538090, leeds_united_fc, brentford_fc).
-partido(538091, manchester_city_fc, crystal_palace_fc).
 partido(538092, newcastle_united_fc, sunderland_afc).
+partido(538086, aston_villa_fc, west_ham_united_fc).
 partido(538093, tottenham_hotspur_fc, nottingham_forest_fc).
-partido(538094, wolverhampton_wanderers_fc, arsenal_fc).
 partido(538095, sunderland_afc, tottenham_hotspur_fc).
 partido(538096, crystal_palace_fc, newcastle_united_fc).
 partido(538097, arsenal_fc, afc_bournemouth).

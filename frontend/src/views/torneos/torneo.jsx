@@ -1,313 +1,161 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TorneosView from "./torneoView";
-import { getLeagues, getStandings, getFixtures, predecir_simple, predecir_goles } from "./torneo.service.js";
+import {
+  getLeagues, getStandings, getFixtures,
+  predecir_simple, predecir_goles,
+} from "./torneo.service.js";
+
+const year = String(new Date().getFullYear());
+const norm = (s = "") => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  .trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
 
 export default function Torneos() {
   const [tournaments, setTournaments] = useState([]);
   const [selectedTournament, setSelectedTournament] = useState(null);
+  const [selectedSeason, setSelectedSeason] = useState(year);
+  const [fixtures, setFixtures] = useState([]);
+  const [activeMatchday, setActiveMatchday] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [minPos, setMinPos] = useState("");
+  const [maxPos, setMaxPos] = useState("");
+  const [numFechas, setNumFechas] = useState("1");
+  const [modoPrediccion, setModoPrediccion] = useState("simple");
+  const [prediccionResultado, setPrediccionResultado] = useState([]);
+  const [prediccionInfo, setPrediccionInfo] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [escenarioIndex, setEscenarioIndex] = useState(0);
 
-  const getPositionColor = (position) => {
-    if (position <= 4) return "text-green-600 bg-green-50";
-    if (position <= 6) return "text-blue-600 bg-blue-50";
-    if (position <= 8) return "text-orange-600 bg-orange-50";
+  const seasons = useMemo(() => {
+    const base = Array.from({ length: 5 }, (_, i) => String(Number(year) - i));
+    return [...new Set([String(selectedTournament?.season ?? year), ...base])];
+  }, [selectedTournament?.season]);
+
+  const getPositionColor = (pos) => {
+    if (pos <= 4) return "text-green-600 bg-green-50";
+    if (pos <= 6) return "text-blue-600 bg-blue-50";
+    if (pos <= 8) return "text-orange-600 bg-orange-50";
     return "text-gray-600 bg-gray-50";
   };
 
-  const currentYear = new Date().getFullYear();
-  const seasons = Array.from({ length: 5 }, (_, i) => (currentYear - i).toString());
-
-  const [selectedSeason, setSelectedSeason] = useState(currentYear.toString());
-
-  const [fixtures, setFixtures] = useState([]);
-  const [activeMatchday, setActiveMatchday] = useState(null);
-
-  // Función para normalizar nombres y buscar logo del equipo
-  const nombre_formato = (nombre) => {
-    return nombre.trim().toLowerCase().replaceAll(" ", "_");
-  };
-
-  const findLogo = (teamName) => {
-    if (!selectedTournament) return "/default-logo.png";
-
-    if (Array.isArray(selectedTournament.teams)) {
-      const team = selectedTournament.teams.find(t => t.team_normalized === nombre_formato(teamName));
-      return team?.logo || "/default-logo.png";
-    } else if (typeof selectedTournament.teams === "object" && selectedTournament.teams !== null) {
-      for (const grupo of Object.values(selectedTournament.teams)) {
-        const team = grupo.find(t => t.team_normalized === nombre_formato(teamName));
-        if (team) return team.logo || "/default-logo.png";
-      }
-    }
-    return "/default-logo.png";
-  };
-
-  const [selectedTeam, setSelectedTeam] = useState(null);
-
-  const [minPos, setMinPos] = useState("");
-  const [maxPos, setMaxPos] = useState("");
-  const [numFechas, setNumFechas] = useState("");
-
-
-  const [escenarioIndex, setEscenarioIndex] = useState(0);
-
-  const [prediccionResultado, setPrediccionResultado] = useState([]);
-
-
   useEffect(() => {
-    async function fetchLeagues() {
-      try {
-        const leagues = await getLeagues();
-        const formatted = leagues.map((l) => ({
-          id: l.id.toString(),
-          name: l.name,
-          country: l.country,
-          season: l.season || currentYear.toString(),
-          logo: l.logo,
-          flag: l.flag,
-          teams_count: l.teams_count,
-          teams: [],
-        }));
-        setTournaments(formatted);
-      } catch (err) {
-        console.error("Error cargando ligas:", err);
-      }
-    }
-    fetchLeagues();
+    let active = true;
+    getLeagues()
+      .then((leagues) => {
+        if (!active) return;
+        setTournaments(leagues.map((l) => ({
+          ...l, id: String(l.id), season: String(l.season ?? year), teams: [],
+        })));
+      })
+      .catch((e) => active && setError(e.message));
+    return () => { active = false; };
   }, []);
 
-  // Cargar tabla de posiciones al seleccionar torneo y temporada
-  useEffect(() => {
-    if (!selectedTournament || !selectedSeason) return;
-
-    // No volver a cargar si ya tenemos equipos para la misma temporada
-    if (selectedTournament.teams && Object.keys(selectedTournament.teams).length > 0 && selectedTournament.season === selectedSeason) return;
-
-    async function fetchStandingsData() {
-      try {
-        const data = await getStandings(selectedTournament.id, selectedSeason);
-        if (data.error) {
-          console.error("Error API backend:", data.error);
-          return;
-        }
-        let teamsData = null;
-        if (data.group_stage) {
-          // Fase de grupos
-          teamsData = data.groups;
-        } else {
-          // Liga normal
-          teamsData = data.tabla;
-        }
-
-        setTournaments((prev) =>
-          prev.map((t) =>
-            t.id.toString() === selectedTournament.id.toString()
-              ? { ...t, teams: teamsData, season: selectedSeason, group_stage: data.group_stage }
-              : t
-          )
-        );
-
-        setSelectedTournament((prev) => ({
-          ...prev,
-          teams: teamsData,
-          season: selectedSeason,
-          group_stage: data.group_stage
-        }));
-
-      } catch (err) {
-        console.error("Error al cargar tabla de posiciones:", err);
-      }
-    }
-
-    fetchStandingsData();
-  }, [selectedTournament, selectedSeason]);
-
-  // Cargar fixtures al seleccionar torneo
-  useEffect(() => {
-    if (!selectedTournament) return;
-
-    let cancelado = false;
-
-    async function fetchFixturesData() {
-      try {
-        const data = await getFixtures(selectedTournament.id, selectedTournament.season);
-        if (cancelado) return;
-
-        setFixtures(data);
-
-        const fechas = data.map(f => f.matchday);
-        const matchdaysUnicos = [...new Set(fechas)].sort((a, b) => a - b);
-        setActiveMatchday(matchdaysUnicos[0]);
-      } catch (err) {
-        console.error("Error al cargar fixtures:", err);
-      }
-    }
-
-    fetchFixturesData();
-
-    return () => {
-      cancelado = true;
-    };
-  }, [selectedTournament]);
-
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!selectedTeam) return;
-
-  const equipo = selectedTeam.team_normalized;
-  try {
-    let data;
-    if (selectedTournament?.group_stage) {
-      // Para fase de grupos
-      data = await predecir_goles(selectedTournament.id, equipo, minPos, maxPos, numFechas);
-    } else {
-      // Para liga normal
-      data = await predecir_simple(selectedTournament.id, equipo, minPos, maxPos, numFechas);
-    }
-
-    setPrediccionResultado(data.resultados); // esto actualiza el estado, pero el nuevo valor no está disponible aún en este punto
-    console.log(data)
-  } catch (error) {
-    console.error("Error al predecir:", error);
-  }
-};
-
-// Este efecto se activa cuando cambia prediccionResultado
-useEffect(() => {
-  if (Array.isArray(prediccionResultado) && prediccionResultado.length > 0) {
-    console.log("=== Resultado actualizado ===");
-    console.log("Escenario actual:", prediccionResultado[escenarioIndex]);
-    console.log("Ranking actual:", prediccionResultado[escenarioIndex]?.ranking);
+  const seleccionarTorneo = (torneo) => {
+    setSelectedTournament(torneo ? { ...torneo, teams: [] } : null);
+    setSelectedSeason(String(torneo?.season ?? year));
+    setSelectedTeam(null);
+    setPrediccionResultado([]);
+    setPrediccionInfo("");
+    setFixtures([]);
+    setActiveMatchday(null);
+    setError("");
     setEscenarioIndex(0);
-  }
-}, [prediccionResultado]);
+    setModoPrediccion(torneo?.id === "9999" ? "goles" : "simple");
+  };
 
-useEffect(() => {
-  console.log("Predicción resultado:", prediccionResultado);
-  console.log("Escenario actual:", prediccionResultado[escenarioIndex]);
-}, [prediccionResultado]);
+  // Solo se carga si cambian torneo o temporada. No depende de `selectedTournament`
+  // entero, evitando el bucle fetch -> setState -> fetch.
+  useEffect(() => {
+    if (!selectedTournament?.id) return;
+    const id = selectedTournament.id;
+    let active = true;
+    setLoading(true);
+    setError("");
+    Promise.allSettled([getStandings(id, selectedSeason), getFixtures(id, selectedSeason)])
+      .then(([tablaResp, fixtureResp]) => {
+        if (!active) return;
+        const errores = [];
+        if (tablaResp.status === "fulfilled") {
+          const standings = tablaResp.value;
+          const teams = standings.group_stage ? standings.groups : standings.tabla;
+          if (!teams) errores.push("La tabla llegó con un formato inválido.");
+          else setSelectedTournament((prev) => prev?.id === id ? {
+            ...prev, teams, group_stage: standings.group_stage, season: selectedSeason,
+          } : prev);
+        } else errores.push(`Tabla: ${tablaResp.reason.message}`);
+        if (fixtureResp.status === "fulfilled" && Array.isArray(fixtureResp.value)) {
+          const partidos = fixtureResp.value;
+          setFixtures(partidos);
+          const fechas = [...new Set(partidos.map((p) => p.matchday).filter((v) => v != null))]
+            .sort((a, b) => Number(a) - Number(b));
+          setActiveMatchday(fechas.length ? fechas[0] : null);
+        } else {
+          setFixtures([]);
+          setActiveMatchday(null);
+          errores.push(`Partidos: ${fixtureResp.status === "rejected"
+            ? fixtureResp.reason.message : "Formato inválido"}`);
+        }
+        if (errores.length) setError(errores.join(" | "));
+        setSelectedTeam(null);
+        setPrediccionResultado([]);
+      })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [selectedTournament?.id, selectedSeason]);
+
+  const findLogo = (teamName) => {
+    if (!selectedTournament?.teams) return "/default-logo.png";
+    const equipos = Array.isArray(selectedTournament.teams)
+      ? selectedTournament.teams : Object.values(selectedTournament.teams).flat();
+    return equipos.find((t) => norm(t.team_normalized) === norm(teamName) || norm(t.team) === norm(teamName))?.logo
+      || "/default-logo.png";
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedTeam || !selectedTournament) return;
+    setPrediccionResultado([]);
+    setPrediccionInfo("");
+    setError("");
+    setLoading(true);
+    try {
+      const id = selectedTournament.id;
+      const equipo = selectedTeam.team_normalized;
+      const min = Number(minPos), max = Number(maxPos), fechas = Number(numFechas);
+      if (!Number.isInteger(min) || !Number.isInteger(max) || !Number.isInteger(fechas) ||
+          min < 1 || max < min || fechas < 1) {
+        throw new Error("Indicá posiciones y fechas válidas.");
+      }
+      const data = modoPrediccion === "goles"
+        ? await predecir_goles(id, equipo, min, max, fechas)
+        : await predecir_simple(id, equipo, min, max, fechas);
+      setPrediccionResultado(Array.isArray(data.resultados) ? data.resultados : []);
+      setPrediccionInfo(data.mensaje || "");
+      setEscenarioIndex(0);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const isGroupStage = selectedTournament?.group_stage === true;
-
-
-  const tablaSimulada = React.useMemo(() => {
-    if (!prediccionResultado?.[escenarioIndex]?.escenario || !selectedTournament?.teams) return [];
-
-    let equiposArray = [];
-
-    if (Array.isArray(selectedTournament.teams)) {
-      // Liga normal, ya es array
-      equiposArray = selectedTournament.teams;
-    } else if (typeof selectedTournament.teams === "object" && selectedTournament.teams !== null) {
-      // Fase de grupos, unir todos los arrays de los grupos en uno solo
-      equiposArray = Object.values(selectedTournament.teams).flat();
-    } else {
-      return [];
-    }
-
-    return calcularTablaSimulada(equiposArray, prediccionResultado[escenarioIndex].escenario);
-  }, [prediccionResultado, escenarioIndex, selectedTournament]);
-
-// Solo si hay fase de grupos y un equipo seleccionado
-const grupoDelEquipo = isGroupStage && selectedTeam
-  ? Object.entries(selectedTournament.teams).find(([grupoId, equipos]) =>
-      equipos.some(e => e.team === selectedTeam.team)
-    )
-  : null;
-
-const tablaGrupo = grupoDelEquipo
-  ? tablaSimulada.filter(team =>
-      grupoDelEquipo[1].some(e => e.team === team.team)
-    )
-  : tablaSimulada;
-
-
-  function calcularTablaSimulada(teamsOriginal, partidosSimulados) {
-    // Clonamos los equipos originales para no mutar el estado original
-    const tablaSim = teamsOriginal.map(team => ({
-      ...team,
-      played: team.played ?? 0,
-      won: team.won ?? 0,
-      lost: team.lost ?? 0,
-      draw: team.draw ?? 0,
-      goals_for: team.goalsFor ?? 0,
-      goals_against: team.goalsAgainst ?? 0,
-      points: team.points ?? 0
-    }));
-
-    const equiposMap = new Map(tablaSim.map(team => [team.team_normalized, team]));
-
-    for (const partido of partidosSimulados) {
-      let local, visitante, golesLocal, golesVisitante;
-
-      if (
-        partido.equipo_local &&
-        partido.equipo_visitante &&
-        typeof partido.goles_local !== "undefined" &&
-        typeof partido.goles_visitante !== "undefined"
-      ) {
-        // ✅ Formato con datos explícitos (el que estás recibiendo)
-        local = partido.equipo_local;
-        visitante = partido.equipo_visitante;
-        golesLocal = partido.goles_local;
-        golesVisitante = partido.goles_visitante;
-      } else if (partido.partido && partido.resultado) {
-        // Solo si llega en formato string (no es tu caso actual)
-        [local, visitante] = partido.partido.split(" vs ");
-        [golesLocal, golesVisitante] = partido.resultado.split("-").map(Number);
-      } else {
-        console.warn("Formato de partido no reconocido:", partido);
-        continue;
-      }
-
-      const equipoLocal = equiposMap.get(local);
-      const equipoVisitante = equiposMap.get(visitante);
-
-
-      if (!equipoLocal || !equipoVisitante) {
-        console.warn("Equipo no encontrado en tabla:", local, visitante);
-        continue;
-      }
-
-      equipoLocal.played += 1;
-      equipoVisitante.played += 1;
-
-      equipoLocal.goals_for += golesLocal;
-      equipoLocal.goals_against += golesVisitante;
-      equipoVisitante.goals_for += golesVisitante;
-      equipoVisitante.goals_against += golesLocal;
-
-      if (golesLocal > golesVisitante) {
-        equipoLocal.won += 1;
-        equipoVisitante.lost += 1;
-        equipoLocal.points += 3;
-      } else if (golesLocal < golesVisitante) {
-        equipoVisitante.won += 1;
-        equipoLocal.lost += 1;
-        equipoVisitante.points += 3;
-      } else {
-        equipoLocal.draw += 1;
-        equipoVisitante.draw += 1;
-        equipoLocal.points += 1;
-        equipoVisitante.points += 1;
-      }
-    }
-
-
-    return tablaSim.sort((a, b) => {
-      if (b.points !== a.points) return b.points - a.points;
-
-      const dgA = a.goals_for - a.goals_against;
-      const dgB = b.goals_for - b.goals_against;
-      return dgB - dgA;
-    });
-  }
-
+  const grupoDelEquipo = isGroupStage && selectedTeam && selectedTournament?.teams
+    ? Object.entries(selectedTournament.teams).find(([, equipos]) =>
+      equipos.some((e) => e.team_normalized === selectedTeam.team_normalized)) ?? null
+    : null;
+  const tablaSimulada = prediccionResultado?.[escenarioIndex]?.ranking ?? [];
+  const tablaGrupo = grupoDelEquipo
+    ? tablaSimulada.filter((e) => grupoDelEquipo[1].some(
+        (original) => original.team_normalized === (e.team_normalized || e.equipo)))
+    : tablaSimulada;
 
   return (
     <TorneosView
       tournaments={tournaments}
       selectedTournament={selectedTournament}
-      setSelectedTournament={setSelectedTournament}
+      setSelectedTournament={seleccionarTorneo}
       getPositionColor={getPositionColor}
       seasons={seasons}
       selectedSeason={selectedSeason}
@@ -319,18 +167,16 @@ const tablaGrupo = grupoDelEquipo
       selectedTeam={selectedTeam}
       setSelectedTeam={setSelectedTeam}
       handleSubmit={handleSubmit}
-      minPos={minPos}
-      setMinPos={setMinPos}
-      maxPos={maxPos}
-      setMaxPos={setMaxPos}
-      numFechas={numFechas}
-      setNumFechas={setNumFechas}
+      minPos={minPos} setMinPos={setMinPos}
+      maxPos={maxPos} setMaxPos={setMaxPos}
+      numFechas={numFechas} setNumFechas={setNumFechas}
       prediccionResultado={prediccionResultado}
-      escenarioIndex={escenarioIndex}
-      setEscenarioIndex={setEscenarioIndex}
+      escenarioIndex={escenarioIndex} setEscenarioIndex={setEscenarioIndex}
       tablaSimulada={tablaSimulada}
       grupoDelEquipo={grupoDelEquipo}
       tablaGrupo={tablaGrupo}
+      modoPrediccion={modoPrediccion} setModoPrediccion={setModoPrediccion}
+      error={error} loading={loading} prediccionInfo={prediccionInfo}
     />
   );
 }

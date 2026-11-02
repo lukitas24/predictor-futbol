@@ -1,35 +1,35 @@
-puntos(maia, 64).
-goles(maia, 54, 31).
-puntos(charly, 60).
-goles(charly, 45, 48).
-puntos(fabricio, 59).
-goles(fabricio, 52, 50).
-puntos(rami, 58).
-goles(rami, 63, 21).
-puntos(lucas, 54).
-goles(lucas, 60, 27).
-puntos(facu, 52).
-goles(facu, 45, 46).
-puntos(alan, 52).
-goles(alan, 33, 55).
-puntos(ricardo, 50).
-goles(ricardo, 41, 25).
-puntos(meli, 47).
-goles(meli, 51, 28).
-puntos(romi, 46).
-goles(romi, 35, 51).
-puntos(demian, 32).
-goles(demian, 34, 29).
-puntos(fran, 31).
-goles(fran, 43, 47).
-puntos(rodrigo, 28).
-goles(rodrigo, 57, 46).
-puntos(claudio, 27).
-goles(claudio, 43, 55).
-puntos(aldana, 23).
-goles(aldana, 62, 51).
-puntos(eric, 15).
-goles(eric, 41, 48).
+puntos(lucas, 64).
+goles(lucas, 53, 34).
+puntos(demian, 60).
+goles(demian, 25, 29).
+puntos(aldana, 60).
+goles(aldana, 31, 49).
+puntos(facu, 58).
+goles(facu, 64, 38).
+puntos(romi, 57).
+goles(romi, 50, 52).
+puntos(claudio, 57).
+goles(claudio, 38, 40).
+puntos(charly, 56).
+goles(charly, 34, 20).
+puntos(rami, 53).
+goles(rami, 44, 41).
+puntos(eric, 52).
+goles(eric, 52, 27).
+puntos(fabricio, 47).
+goles(fabricio, 46, 46).
+puntos(maia, 46).
+goles(maia, 42, 21).
+puntos(rodrigo, 40).
+goles(rodrigo, 43, 28).
+puntos(fran, 40).
+goles(fran, 64, 54).
+puntos(meli, 37).
+goles(meli, 44, 39).
+puntos(ricardo, 32).
+goles(ricardo, 65, 54).
+puntos(alan, 22).
+goles(alan, 41, 31).
 
 partido(1, maia, lucas).
 partido(2, facu, eric).
