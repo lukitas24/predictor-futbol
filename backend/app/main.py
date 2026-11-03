@@ -238,7 +238,7 @@ NOMBRES_MNT = {'ing': 'ING',
 
 
 def leer_datos_mnt():
-    ruta = Path(__file__).resolve().parent / "prolog" / "datos_mnt.pl"
+    ruta = Path(__file__).resolve().parent.parent / "prolog" / "datos_mnt.pl"
     if not ruta.is_file():
         raise HTTPException(
             status_code=404,
