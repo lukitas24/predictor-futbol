@@ -1,5 +1,8 @@
 // services/torneo.service.js
-const BASE_URL = 'http://localhost:8000'; // Cambiá esta URL si el backend corre en otro servidor.
+const BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  "http://localhost:8000"
+).replace(/\/$/, "");
 
 async function obtener(path) {
     let res;
